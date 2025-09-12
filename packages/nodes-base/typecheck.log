@@ -1,0 +1,8 @@
+
+> n8n-nodes-base@1.109.0 typecheck /home/runner/work/n8n/n8n/packages/nodes-base
+> tsc --noEmit
+
+tsconfig.json(2,14): error TS6053: File '@n8n/typescript-config/modern/tsconfig.json' not found.
+tsconfig.json(47,3): error TS6306: Referenced project '/home/runner/work/n8n/n8n/packages/workflow/tsconfig.build.esm.json' must have setting "composite": true.
+ ELIFECYCLE  Command failed with exit code 2.
+ WARN   Local package.json exists, but node_modules missing, did you mean to install?
