@@ -1,0 +1,194 @@
+{
+  "name": "Colmeia Health Check",
+  "description": "Automated health monitoring for the Colmeia Triple IA system",
+  "version": 1,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 */4 * * *"
+            }
+          ]
+        }
+      },
+      "id": "health-schedule",
+      "name": "Health Check Schedule",
+      "type": "n8n-nodes-base.schedule",
+      "typeVersion": 1.1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "agent": "hamilton",
+        "operation": "resilience",
+        "inputText": "System health check - monitoring all components",
+        "protocolMode": "standard"
+      },
+      "id": "system-health",
+      "name": "System Health Check",
+      "type": "n8n-nodes-base.colmeia",
+      "typeVersion": 1,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "operation": "verify",
+        "dataSources": ["notion", "workflows", "config"]
+      },
+      "id": "backup-verify",
+      "name": "Backup Verification",
+      "type": "n8n-nodes-base.safePoint",
+      "typeVersion": 1,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "agent": "martinho",
+        "operation": "audit",
+        "inputText": "Security audit for health check",
+        "protocolMode": "standard",
+        "securityLevel": "medium"
+      },
+      "id": "security-audit",
+      "name": "Security Audit",
+      "type": "n8n-nodes-base.colmeia",
+      "typeVersion": 1,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $('System Health Check').first().json.resilienceReport?.systemHealth }}",
+              "operation": "equal",
+              "value2": "optimal"
+            },
+            {
+              "value1": "={{ $('Backup Verification').first().json.overallStatus }}",
+              "operation": "equal",
+              "value2": "passed"
+            },
+            {
+              "value1": "={{ $('Security Audit').first().json.complianceStatus }}",
+              "operation": "equal",
+              "value2": "PASSED"
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          }
+        },
+        "combineOperation": "all"
+      },
+      "id": "health-gate",
+      "name": "Health Status Gate",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1000, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Healthy system report\nconst healthData = $('System Health Check').first().json;\nconst backupData = $('Backup Verification').first().json;\nconst securityData = $('Security Audit').first().json;\n\nreturn [{\n  json: {\n    status: 'healthy',\n    timestamp: new Date().toISOString(),\n    systemHealth: healthData.resilienceReport?.systemHealth || 'unknown',\n    backupStatus: backupData.overallStatus,\n    securityScore: securityData.securityAudit?.score || 0,\n    overallScore: 95,\n    message: 'All systems operational - Colmeia functioning normally',\n    nextCheck: new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString()\n  }\n}];"
+      },
+      "id": "healthy-report",
+      "name": "Healthy System Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1200, 250]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Alert system report\nconst healthData = $('System Health Check').first().json;\nconst backupData = $('Backup Verification').first().json;\nconst securityData = $('Security Audit').first().json;\n\nconst issues = [];\nif (healthData.resilienceReport?.systemHealth !== 'optimal') {\n  issues.push('System health degraded');\n}\nif (backupData.overallStatus !== 'passed') {\n  issues.push('Backup integrity issues');\n}\nif (securityData.complianceStatus !== 'PASSED') {\n  issues.push('Security compliance failure');\n}\n\nreturn [{\n  json: {\n    status: 'alert',\n    timestamp: new Date().toISOString(),\n    severity: 'high',\n    issues: issues,\n    systemHealth: healthData.resilienceReport?.systemHealth || 'unknown',\n    backupStatus: backupData.overallStatus,\n    securityScore: securityData.securityAudit?.score || 0,\n    message: `ALERT: Colmeia system issues detected - ${issues.join(', ')}`,\n    actionRequired: true,\n    escalation: 'immediate'\n  }\n}];"
+      },
+      "id": "alert-report",
+      "name": "Alert System Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1200, 350]
+    }
+  ],
+  "connections": {
+    "Health Check Schedule": {
+      "main": [
+        [
+          {
+            "node": "System Health Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "System Health Check": {
+      "main": [
+        [
+          {
+            "node": "Backup Verification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Backup Verification": {
+      "main": [
+        [
+          {
+            "node": "Security Audit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Security Audit": {
+      "main": [
+        [
+          {
+            "node": "Health Status Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Health Status Gate": {
+      "main": [
+        [
+          {
+            "node": "Healthy System Report",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert System Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "id": "colmeia",
+      "name": "Colmeia"
+    },
+    {
+      "id": "monitoring",
+      "name": "Monitoring"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "name": "Colmeia Basic Coordination",
+  "description": "Simple example of Colmeia AI agents working together on a task",
+  "version": 1,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "colmeia-basic",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Task Input",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 300],
+      "webhookId": "colmeia-basic-webhook"
+    },
+    {
+      "parameters": {
+        "agent": "biel",
+        "operation": "summary",
+        "inputText": "={{ $json.task || 'Analyze the following request and provide strategic recommendations' }}",
+        "protocolMode": "standard"
+      },
+      "id": "biel-analysis",
+      "name": "Biel Strategic Analysis",
+      "type": "n8n-nodes-base.colmeia",
+      "typeVersion": 1,
+      "position": [400, 250]
+    },
+    {
+      "parameters": {
+        "agent": "bruno",
+        "operation": "document",
+        "inputText": "={{ $('Biel Strategic Analysis').first().json.summary }}",
+        "protocolMode": "standard"
+      },
+      "id": "bruno-documentation",
+      "name": "Bruno Documentation",
+      "type": "n8n-nodes-base.colmeia",
+      "typeVersion": 1,
+      "position": [400, 350]
+    },
+    {
+      "parameters": {
+        "agent": "martinho",
+        "operation": "audit",
+        "inputText": "={{ $json.task || 'Security audit of user input' }}",
+        "protocolMode": "standard",
+        "securityLevel": "medium"
+      },
+      "id": "martinho-security",
+      "name": "Martinho Security Check",
+      "type": "n8n-nodes-base.colmeia",
+      "typeVersion": 1,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combine results from all agents\nconst bielData = $('Biel Strategic Analysis').first().json;\nconst brunoData = $('Bruno Documentation').first().json;\nconst martinhoData = $('Martinho Security Check').first().json;\n\nconst result = {\n  colmeiaSession: {\n    id: `basic_${Date.now()}`,\n    timestamp: new Date().toISOString(),\n    protocol: 'standard',\n    agents: ['biel', 'bruno', 'martinho']\n  },\n  \n  strategicAnalysis: {\n    summary: bielData.summary,\n    insights: bielData.insights || [],\n    recommendations: bielData.recommendations || []\n  },\n  \n  documentation: {\n    structure: brunoData.document || brunoData.organizationalSummary,\n    notionUpdates: brunoData.notionPages || [],\n    kanban: brunoData.kanbanUpdate || null\n  },\n  \n  security: {\n    status: martinhoData.complianceStatus,\n    score: martinhoData.securityAudit?.score || 0,\n    findings: martinhoData.securityAudit?.findings || [],\n    recommendations: martinhoData.securityAudit?.recommendations || []\n  },\n  \n  overallAssessment: {\n    readiness: martinhoData.complianceStatus === 'PASSED' ? 'approved' : 'review_required',\n    confidence: 'high',\n    nextSteps: [\n      'Review strategic recommendations',\n      'Implement documentation structure',\n      'Address any security concerns'\n    ]\n  }\n};\n\nreturn [{ json: result }];"
+      },
+      "id": "result-combiner",
+      "name": "Combine Agent Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}"
+      },
+      "id": "response-output",
+      "name": "Coordination Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1000, 300]
+    }
+  ],
+  "connections": {
+    "Task Input": {
+      "main": [
+        [
+          {
+            "node": "Biel Strategic Analysis",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Bruno Documentation",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Martinho Security Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Biel Strategic Analysis": {
+      "main": [
+        [
+          {
+            "node": "Combine Agent Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bruno Documentation": {
+      "main": [
+        [
+          {
+            "node": "Combine Agent Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Martinho Security Check": {
+      "main": [
+        [
+          {
+            "node": "Combine Agent Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Combine Agent Results": {
+      "main": [
+        [
+          {
+            "node": "Coordination Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "id": "colmeia",
+      "name": "Colmeia"
+    },
+    {
+      "id": "basic",
+      "name": "Basic"
+    }
+  ]
+}
