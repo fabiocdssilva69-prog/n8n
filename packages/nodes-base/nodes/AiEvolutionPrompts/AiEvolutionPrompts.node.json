@@ -1,0 +1,14 @@
+{
+	"node": "n8n-nodes-base.aiEvolutionPrompts",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["AI"],
+	"resources": {
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.aiEvolutionPrompts/"
+			}
+		]
+	},
+	"alias": ["AI Prompts", "Evolution Prompts", "AI Self-Discovery"]
+}

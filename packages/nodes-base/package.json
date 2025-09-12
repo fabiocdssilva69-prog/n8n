@@ -422,6 +422,7 @@
       "dist/nodes/Airtable/AirtableTrigger.node.js",
       "dist/nodes/Airtop/Airtop.node.js",
       "dist/nodes/AiTransform/AiTransform.node.js",
+      "dist/nodes/AiEvolutionPrompts/AiEvolutionPrompts.node.js",
       "dist/nodes/Amqp/Amqp.node.js",
       "dist/nodes/Amqp/AmqpTrigger.node.js",
       "dist/nodes/ApiTemplateIo/ApiTemplateIo.node.js",
