@@ -1,0 +1,116 @@
+{
+  "colmeia": {
+    "version": "1.0.0",
+    "name": "Sistema Colmeia - Triple IA",
+    "description": "Collaborative AI system with multiple agents and automation protocols",
+    "agents": {
+      "biel": {
+        "name": "Biel (ChatGPT Strategist)",
+        "role": "Strategic analysis and creative thinking",
+        "provider": "openai",
+        "model": "gpt-4",
+        "capabilities": ["summarization", "analysis", "creative_writing", "problem_solving"]
+      },
+      "bruno": {
+        "name": "Bruno (Notion Organizer)",
+        "role": "Documentation and organization",
+        "provider": "notion",
+        "capabilities": ["documentation", "organization", "knowledge_management", "kanban"]
+      },
+      "martinho": {
+        "name": "Martinho (Copilot Executor)",
+        "role": "Technical execution and security auditing",
+        "provider": "github_copilot",
+        "capabilities": ["code_execution", "security_audit", "technical_validation", "system_monitoring"]
+      },
+      "hamilton": {
+        "name": "Hamilton (Gemini Resilience)",
+        "role": "Resilience and recovery operations",
+        "provider": "google_vertex",
+        "model": "gemini-ultra",
+        "capabilities": ["resilience_analysis", "recovery_planning", "diversity_insights", "failover_management"]
+      }
+    },
+    "protocols": {
+      "standard": {
+        "name": "Standard Colmeia Protocol",
+        "description": "Normal operation mode with coordinated AI responses",
+        "security_level": "medium",
+        "human_oversight": "required"
+      },
+      "mewtwo": {
+        "name": "Modo Mewtwo",
+        "description": "Full automation mode with enhanced capabilities",
+        "security_level": "high",
+        "human_oversight": "supervisory",
+        "features": ["autonomous_execution", "continuous_logging", "killswitch_available"]
+      },
+      "emergency": {
+        "name": "Emergency Protocols (QAN Mode)",
+        "description": "Emergency response with maximum security measures",
+        "security_level": "critical",
+        "human_oversight": "mandatory",
+        "features": ["immediate_isolation", "enhanced_monitoring", "automatic_rollback"]
+      }
+    },
+    "security": {
+      "principles": [
+        "minimum_privilege",
+        "encryption_by_default",
+        "immutable_logs",
+        "tested_backups",
+        "prompt_security"
+      ],
+      "backup": {
+        "provider": "safepoint",
+        "schedule": {
+          "daily": "0 2 * * *",
+          "weekly": "0 3 * * 0"
+        },
+        "retention": {
+          "daily": 14,
+          "weekly": 12,
+          "milestone": 365
+        },
+        "encryption": "aes-256-gcm",
+        "verification": "sha256"
+      },
+      "monitoring": {
+        "health_checks": "0 9,21 * * *",
+        "security_scans": "0 1 * * *",
+        "integrity_verification": "0 4 * * *"
+      }
+    },
+    "integrations": {
+      "notion": {
+        "workspace": "colmeia_workspace",
+        "databases": ["knowledge_base", "security_evidence", "task_tracking"],
+        "api_version": "2022-06-28"
+      },
+      "openai": {
+        "api_version": "v1",
+        "models": ["gpt-4", "gpt-3.5-turbo", "whisper-1"]
+      },
+      "google_cloud": {
+        "project": "colmeia-system",
+        "services": ["vertex_ai", "cloud_storage", "cloud_functions"]
+      },
+      "monitoring": {
+        "prometheus": {
+          "enabled": true,
+          "port": 9090
+        },
+        "grafana": {
+          "enabled": true,
+          "port": 3000
+        }
+      }
+    },
+    "emergency_codes": {
+      "qan": "Activate all defensive protocols simultaneously",
+      "red_code": "Blue Pill - System hibernation",
+      "golden_code": "Thanos Snap - Reduce functionality by 50%",
+      "black_code": "Batman Contingency - Planned component shutdown"
+    }
+  }
+}

@@ -1,7 +1,0 @@
- WARN  Unsupported engine: wanted: {"node":">=22.16"} (current: {"node":"v20.19.5","pnpm":"10.12.1"})
-
-> n8n-monorepo@1.111.0 build /home/runner/work/n8n/n8n
-> turbo run build
-
-sh: 1: turbo: not found
- ELIFECYCLE  Command failed.

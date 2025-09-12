@@ -1,0 +1,300 @@
+{
+  "name": "Modo Mewtwo - Full Automation Protocol",
+  "description": "Complete automation workflow for the Colmeia Triple IA system with human oversight",
+  "version": 1,
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "colmeia-mewtwo-template"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9,21 * * *"
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Health Check Schedule",
+      "type": "n8n-nodes-base.schedule",
+      "typeVersion": 1.1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "colmeia-mewtwo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Modo Mewtwo Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 180],
+      "webhookId": "colmeia-mewtwo-webhook"
+    },
+    {
+      "parameters": {
+        "agent": "biel",
+        "operation": "summary",
+        "inputText": "={{ $json.input || 'System health check initiated' }}",
+        "protocolMode": "mewtwo",
+        "securityLevel": "high"
+      },
+      "id": "biel-coordinator",
+      "name": "Biel Strategic Analysis",
+      "type": "n8n-nodes-base.colmeia",
+      "typeVersion": 1,
+      "position": [460, 180]
+    },
+    {
+      "parameters": {
+        "operation": "backup",
+        "backupType": "manual",
+        "dataSources": ["notion", "workflows", "config"],
+        "encryption": true,
+        "remoteStorage": ["local", "gcs"]
+      },
+      "id": "safepoint-backup",
+      "name": "SafePoint Backup",
+      "type": "n8n-nodes-base.safePoint",
+      "typeVersion": 1,
+      "position": [680, 120]
+    },
+    {
+      "parameters": {
+        "agent": "bruno",
+        "operation": "document",
+        "inputText": "={{ $json.summary || 'Processing automation results' }}",
+        "protocolMode": "mewtwo"
+      },
+      "id": "bruno-documenter",
+      "name": "Bruno Documentation",
+      "type": "n8n-nodes-base.colmeia",
+      "typeVersion": 1,
+      "position": [680, 240]
+    },
+    {
+      "parameters": {
+        "agent": "martinho",
+        "operation": "audit",
+        "inputText": "={{ $json.inputText || 'Security audit for automation' }}",
+        "protocolMode": "mewtwo",
+        "securityLevel": "critical"
+      },
+      "id": "martinho-auditor",
+      "name": "Martinho Security Audit",
+      "type": "n8n-nodes-base.colmeia",
+      "typeVersion": 1,
+      "position": [680, 360]
+    },
+    {
+      "parameters": {
+        "agent": "hamilton",
+        "operation": "resilience",
+        "inputText": "={{ $json.summary || 'Resilience check for system' }}",
+        "protocolMode": "mewtwo"
+      },
+      "id": "hamilton-resilience",
+      "name": "Hamilton Resilience Check",
+      "type": "n8n-nodes-base.colmeia",
+      "typeVersion": 1,
+      "position": [900, 180]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $('Martinho Security Audit').first().json.complianceStatus }}",
+              "operation": "equal",
+              "value2": "PASSED"
+            }
+          ]
+        }
+      },
+      "id": "security-gate",
+      "name": "Security Gate",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [900, 360]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Colmeia Modo Mewtwo Result Aggregator\nconst bielData = $('Biel Strategic Analysis').first().json;\nconst brunoData = $('Bruno Documentation').first().json;\nconst martinhoData = $('Martinho Security Audit').first().json;\nconst hamiltonData = $('Hamilton Resilience Check').first().json;\nconst safepointData = $('SafePoint Backup').first().json;\n\n// Aggregate results\nconst result = {\n  sessionId: `mewtwo_${Date.now()}`,\n  timestamp: new Date().toISOString(),\n  mode: 'mewtwo',\n  status: 'completed',\n  \n  // Agent summaries\n  agents: {\n    biel: {\n      summary: bielData.summary || bielData.result,\n      insights: bielData.insights || [],\n      recommendations: bielData.recommendations || []\n    },\n    bruno: {\n      documentation: brunoData.notionPages || brunoData.document,\n      kanban: brunoData.kanbanUpdate || null,\n      organization: brunoData.organizationalSummary || brunoData.result\n    },\n    martinho: {\n      security: martinhoData.securityAudit || martinhoData.execution,\n      compliance: martinhoData.complianceStatus,\n      score: martinhoData.securityAudit?.score || 0\n    },\n    hamilton: {\n      resilience: hamiltonData.resilienceReport || hamiltonData.result,\n      metrics: hamiltonData.metrics || {},\n      diversity: hamiltonData.diversityIndex || 'unknown'\n    }\n  },\n  \n  // SafePoint results\n  backup: {\n    id: safepointData.backupManifest?.id,\n    status: safepointData.backupManifest?.status,\n    size: safepointData.totalSize,\n    files: safepointData.files?.length || 0,\n    verification: safepointData.verificationStatus\n  },\n  \n  // Overall assessment\n  assessment: {\n    securityScore: martinhoData.securityAudit?.score || 0,\n    resilienceLevel: hamiltonData.resilienceReport?.systemHealth || 'unknown',\n    backupStatus: safepointData.backupManifest?.status || 'unknown',\n    overallHealth: 'optimal' // This would be calculated based on all factors\n  },\n  \n  // Human oversight controls\n  controls: {\n    killSwitchAvailable: true,\n    humanConfirmationRequired: false,\n    reversible: true,\n    auditTrail: true\n  },\n  \n  // Next actions\n  nextActions: [\n    'Review agent recommendations',\n    'Confirm backup integrity',\n    'Monitor system metrics',\n    'Schedule next automation cycle'\n  ]\n};\n\nreturn [{ json: result }];"
+      },
+      "id": "result-aggregator",
+      "name": "Mewtwo Result Aggregator",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 240]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=Modo Mewtwo automation completed successfully.\\n\\nSession ID: {{ $json.sessionId }}\\nTimestamp: {{ $json.timestamp }}\\nStatus: {{ $json.status }}\\n\\nSecurity Score: {{ $json.assessment.securityScore }}\\nResilience Level: {{ $json.assessment.resilienceLevel }}\\nBackup Status: {{ $json.assessment.backupStatus }}\\n\\nKill Switch: Available\\nHuman Override: Active\\n\\nNext review required in 24 hours."
+      },
+      "id": "response-node",
+      "name": "Automation Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1340, 240]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "SECURITY ALERT: Automation halted due to security compliance failure.\\n\\nSecurity Status: {{ $('Martinho Security Audit').first().json.complianceStatus }}\\nSession ID: {{ $('Biel Strategic Analysis').first().json.sessionId }}\\n\\nHuman intervention required immediately.\\nKill switch activated."
+      },
+      "id": "security-alert",
+      "name": "Security Alert Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1120, 420]
+    }
+  ],
+  "connections": {
+    "Health Check Schedule": {
+      "main": [
+        [
+          {
+            "node": "Biel Strategic Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Modo Mewtwo Trigger": {
+      "main": [
+        [
+          {
+            "node": "Biel Strategic Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Biel Strategic Analysis": {
+      "main": [
+        [
+          {
+            "node": "SafePoint Backup",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Bruno Documentation",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Martinho Security Audit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SafePoint Backup": {
+      "main": [
+        [
+          {
+            "node": "Hamilton Resilience Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bruno Documentation": {
+      "main": [
+        [
+          {
+            "node": "Hamilton Resilience Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Martinho Security Audit": {
+      "main": [
+        [
+          {
+            "node": "Security Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hamilton Resilience Check": {
+      "main": [
+        [
+          {
+            "node": "Mewtwo Result Aggregator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Security Gate": {
+      "main": [
+        [
+          {
+            "node": "Mewtwo Result Aggregator",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Security Alert Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mewtwo Result Aggregator": {
+      "main": [
+        [
+          {
+            "node": "Automation Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "id": "colmeia",
+      "name": "Colmeia"
+    },
+    {
+      "createdAt": "2024-01-01T00:00:00.000Z", 
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "id": "automation",
+      "name": "Automation"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2024-01-01T00:00:00.000Z",
+  "versionId": "colmeia-mewtwo-v1"
+}

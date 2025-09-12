@@ -1,0 +1,14 @@
+{
+	"node": "n8n-nodes-base.safePoint",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Utility", "Security"],
+	"resources": {
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.safepoint/"
+			}
+		]
+	},
+	"alias": ["Backup", "Security", "Integrity Check"]
+}
