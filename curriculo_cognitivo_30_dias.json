@@ -1,0 +1,242 @@
+[
+  {
+    "dia": 1,
+    "fase": "fase1",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-1",
+    "tactica": "tactica-dia-1",
+    "prompt_mineracao": "prompt-mineracao-dia-1"
+  },
+  {
+    "dia": 2,
+    "fase": "fase1",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-2",
+    "tactica": "tactica-dia-2",
+    "prompt_mineracao": "prompt-mineracao-dia-2"
+  },
+  {
+    "dia": 3,
+    "fase": "fase1",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-3",
+    "tactica": "tactica-dia-3",
+    "prompt_mineracao": "prompt-mineracao-dia-3"
+  },
+  {
+    "dia": 4,
+    "fase": "fase1",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-4",
+    "tactica": "tactica-dia-4",
+    "prompt_mineracao": "prompt-mineracao-dia-4"
+  },
+  {
+    "dia": 5,
+    "fase": "fase1",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-5",
+    "tactica": "tactica-dia-5",
+    "prompt_mineracao": "prompt-mineracao-dia-5"
+  },
+  {
+    "dia": 6,
+    "fase": "fase1",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-6",
+    "tactica": "tactica-dia-6",
+    "prompt_mineracao": "prompt-mineracao-dia-6"
+  },
+  {
+    "dia": 7,
+    "fase": "fase1",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-7",
+    "tactica": "tactica-dia-7",
+    "prompt_mineracao": "prompt-mineracao-dia-7"
+  },
+  {
+    "dia": 8,
+    "fase": "fase1",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-8",
+    "tactica": "tactica-dia-8",
+    "prompt_mineracao": "prompt-mineracao-dia-8"
+  },
+  {
+    "dia": 9,
+    "fase": "fase1",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-9",
+    "tactica": "tactica-dia-9",
+    "prompt_mineracao": "prompt-mineracao-dia-9"
+  },
+  {
+    "dia": 10,
+    "fase": "fase1",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-10",
+    "tactica": "tactica-dia-10",
+    "prompt_mineracao": "prompt-mineracao-dia-10"
+  },
+  {
+    "dia": 11,
+    "fase": "fase2",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-11",
+    "tactica": "tactica-dia-11",
+    "prompt_mineracao": "prompt-mineracao-dia-11"
+  },
+  {
+    "dia": 12,
+    "fase": "fase2",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-12",
+    "tactica": "tactica-dia-12",
+    "prompt_mineracao": "prompt-mineracao-dia-12"
+  },
+  {
+    "dia": 13,
+    "fase": "fase2",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-13",
+    "tactica": "tactica-dia-13",
+    "prompt_mineracao": "prompt-mineracao-dia-13"
+  },
+  {
+    "dia": 14,
+    "fase": "fase2",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-14",
+    "tactica": "tactica-dia-14",
+    "prompt_mineracao": "prompt-mineracao-dia-14"
+  },
+  {
+    "dia": 15,
+    "fase": "fase2",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-15",
+    "tactica": "tactica-dia-15",
+    "prompt_mineracao": "prompt-mineracao-dia-15"
+  },
+  {
+    "dia": 16,
+    "fase": "fase2",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-16",
+    "tactica": "tactica-dia-16",
+    "prompt_mineracao": "prompt-mineracao-dia-16"
+  },
+  {
+    "dia": 17,
+    "fase": "fase2",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-17",
+    "tactica": "tactica-dia-17",
+    "prompt_mineracao": "prompt-mineracao-dia-17"
+  },
+  {
+    "dia": 18,
+    "fase": "fase2",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-18",
+    "tactica": "tactica-dia-18",
+    "prompt_mineracao": "prompt-mineracao-dia-18"
+  },
+  {
+    "dia": 19,
+    "fase": "fase2",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-19",
+    "tactica": "tactica-dia-19",
+    "prompt_mineracao": "prompt-mineracao-dia-19"
+  },
+  {
+    "dia": 20,
+    "fase": "fase2",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-20",
+    "tactica": "tactica-dia-20",
+    "prompt_mineracao": "prompt-mineracao-dia-20"
+  },
+  {
+    "dia": 21,
+    "fase": "fase3",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-21",
+    "tactica": "tactica-dia-21",
+    "prompt_mineracao": "prompt-mineracao-dia-21"
+  },
+  {
+    "dia": 22,
+    "fase": "fase3",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "Micro-hábitos: identifique o gatilho e a recompensa do hábito [HÁBITO_DESEJADO] e escreva um micro-passo para iniciá-lo.",
+    "tactica": "Use um gatilho visível e uma recompensa imediata para reforçar o novo hábito, seguindo a estratégia de cue-rotina-recompensa.",
+    "prompt_mineracao": "Quais gatilhos e recompensas você associa ao hábito [HÁBITO_DESEJADO], e qual micro-passos adotará hoje?"
+  },
+  {
+    "dia": 23,
+    "fase": "fase3",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-23",
+    "tactica": "tactica-dia-23",
+    "prompt_mineracao": "prompt-mineracao-dia-23"
+  },
+  {
+    "dia": 24,
+    "fase": "fase3",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-24",
+    "tactica": "tactica-dia-24",
+    "prompt_mineracao": "prompt-mineracao-dia-24"
+  },
+  {
+    "dia": 25,
+    "fase": "fase3",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-25",
+    "tactica": "tactica-dia-25",
+    "prompt_mineracao": "prompt-mineracao-dia-25"
+  },
+  {
+    "dia": 26,
+    "fase": "fase3",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-26",
+    "tactica": "tactica-dia-26",
+    "prompt_mineracao": "prompt-mineracao-dia-26"
+  },
+  {
+    "dia": 27,
+    "fase": "fase3",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-27",
+    "tactica": "tactica-dia-27",
+    "prompt_mineracao": "prompt-mineracao-dia-27"
+  },
+  {
+    "dia": 28,
+    "fase": "fase3",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-28",
+    "tactica": "tactica-dia-28",
+    "prompt_mineracao": "prompt-mineracao-dia-28"
+  },
+  {
+    "dia": 29,
+    "fase": "fase3",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-29",
+    "tactica": "tactica-dia-29",
+    "prompt_mineracao": "prompt-mineracao-dia-29"
+  },
+  {
+    "dia": 30,
+    "fase": "fase3",
+    "modelo": "gpt-3.5-turbo",
+    "exercicio": "exercicio-dia-30",
+    "tactica": "tactica-dia-30",
+    "prompt_mineracao": "prompt-mineracao-dia-30"
+  }
+]
