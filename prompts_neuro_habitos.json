@@ -1,0 +1,17 @@
+[
+  {
+    "prompt": "Identifique o gatilho e a recompensa do hábito [HÁBITO_DESEJADO]. Onde você costuma estar quando isso acontece e o que sente ao final?"
+  },
+  {
+    "prompt": "Defina um micro-passo para iniciar o hábito [HÁBITO_DESEJADO] hoje e escolha uma recompensa imediata que o motive a repeti-lo."
+  },
+  {
+    "prompt": "Liste três maneiras de reduzir a fricção para praticar [HÁBITO_DESEJADO] (ex.: preparar o ambiente, dividir em etapas menores)."
+  },
+  {
+    "prompt": "Analise um gatilho do hábito [HÁBITO_INDESEJADO] que deseja remover. Como você pode alterar seu ambiente ou rotina para ofuscar esse gatilho?"
+  },
+  {
+    "prompt": "Escolha uma rotina alternativa para substituir o hábito [HÁBITO_INDESEJADO] e descreva qual recompensa semelhante ela oferece ao seu cérebro."
+  }
+]

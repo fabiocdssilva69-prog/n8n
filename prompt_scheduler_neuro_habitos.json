@@ -1,0 +1,115 @@
+{
+  "name": "Prompt Neuro Habitos Scheduler",
+  "nodes": [
+    {
+      "parameters": {
+        "schedule": {
+          "mode": "everyDay",
+          "hour": 8,
+          "minute": 0
+        }
+      },
+      "name": "Cron",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "fileName": "/data/prompts_neuro_habitos.json",
+        "binaryPropertyName": "data"
+      },
+      "name": "Read Binary File",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [300, 0]
+    },
+    {
+      "parameters": {
+        "functionCode": "const data = items[0].binary.data.data;\nconst content = Buffer.from(data, 'base64').toString('utf8');\nconst prompts = JSON.parse(content);\nconst now = new Date();\nconst index = now.getDate() % prompts.length;\nconst prompt = prompts[index];\nreturn [{ json: { prompt } }];"
+      },
+      "name": "Select Prompt",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [600, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://api.openai.com/v1/completions",
+        "method": "POST",
+        "authentication": "headerAuth",
+        "headerAuthFields": {
+          "name": "Authorization",
+          "value": "Bearer YOUR_OPENAI_API_KEY_PLACEHOLDER"
+        },
+        "jsonParameters": true,
+        "options": {},
+        "bodyParametersJson": "{\n  \"model\": \"gpt-3.5-turbo\",\n  \"prompt\": \"{{ $json.prompt }}\",\n  \"max_tokens\": 256\n}"
+      },
+      "name": "Call LLM (optional)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [900, 0]
+    },
+    {
+      "parameters": {
+        "toEmail": "recipient@example.com",
+        "subject": "Prompt neuro-hábito",
+        "text": "Aqui está seu prompt de neuro-hábito: {{ $json.prompt }}",
+        "fromEmail": "sender@example.com"
+      },
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [1200, 0],
+      "credentials": {
+        "smtp": {
+          "id": "SMTP_CREDENTIAL_PLACEHOLDER"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Cron": {
+      "main": [
+        [
+          {
+            "node": "Read Binary File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Binary File": {
+      "main": [
+        [
+          {
+            "node": "Select Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Prompt": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call LLM (optional)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false
+}
